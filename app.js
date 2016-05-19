@@ -9,4 +9,4 @@ app.get('/', function (req, res) {
     res.sendFile('main.html', options);
 });
 console.log("Web server has started.");
-app.listen(8080);
+app.listen(80);
