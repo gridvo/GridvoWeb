@@ -88344,7 +88344,7 @@ var DVConfigPanel = React.createClass({
     },
     componentDidMount: function componentDidMount() {
         var panel = this;
-        client = mqtt.connect('ws://10.0.3.21:61623', { "username": "gridvo", "password": "gridvo" });
+        client = mqtt.connect('ws://http://pascal.gridvo.com:61623', { "username": "gridvo", "password": "gridvo" });
         client.on('connect', function () {
             client.on('message', function (topic, message) {
                 if (topic == panel.props.stationName + '/stationDVConfig') {
@@ -88706,7 +88706,7 @@ var RTDataConfigPanel = React.createClass({
     },
     componentDidMount: function componentDidMount() {
         var panel = this;
-        client = mqtt.connect('ws://10.0.3.21:61623', { "username": "gridvo", "password": "gridvo" });
+        client = mqtt.connect('ws://http://pascal.gridvo.com:61623', { "username": "gridvo", "password": "gridvo" });
         client.on('connect', function () {
             client.on('message', function (topic, message) {
                 if (topic == panel.props.stationName + '/stationRDConfig') {
@@ -88980,7 +88980,7 @@ var RTDataDashBoard = React.createClass({
     },
     componentDidMount: function componentDidMount() {
         var dashBoard = this;
-        client = mqtt.connect('ws://10.0.3.21:61623', { "username": "gridvo", "password": "gridvo" });
+        client = mqtt.connect('ws://http://pascal.gridvo.com:61623', { "username": "gridvo", "password": "gridvo" });
         client.on('connect', function () {
             client.on('message', function (topic, message) {
                 if (topic == dashBoard.props.stationName + '/stationDVConfig') {
