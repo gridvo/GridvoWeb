@@ -88461,6 +88461,22 @@ var DVConfigPanel = React.createClass({
                                 name: dVConfig.dataName + '-minV',
                                 value: dVConfig.minV, onChange: dvcp.handleChange })
                         )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'weui_cell' },
+                        React.createElement(
+                            'div',
+                            { className: 'weui_cell_hd' },
+                            '轴间隔值'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'weui_cell_bd weui_cell_primary' },
+                            React.createElement('input', { className: 'weui_input', type: 'number', pattern: '[0-9]*',
+                                name: dVConfig.dataName + '-axisIntervalV',
+                                value: dVConfig.axisIntervalV, onChange: dvcp.handleChange })
+                        )
                     )
                 )
             );
@@ -89370,8 +89386,9 @@ var RTDataMonitorPanel = React.createClass({
             }
         }
 
-        var maxPQV, minPQV, maxSWV, minSWV, maxYLV, minYLV;
+        var maxPQV, minPQV, maxSWV, minSWV, maxYLV, minYLV, intervalPQV, intervalSWV, intervalYLV;
         maxPQV = minPQV = maxSWV = minSWV = maxYLV = minYLV = "auto";
+        intervalPQV = intervalSWV = intervalYLV = 0;
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
         var _iteratorError2 = undefined;
@@ -89398,6 +89415,9 @@ var RTDataMonitorPanel = React.createClass({
                             minPQV = dVConfig.minV;
                         }
                     }
+                    if (dVConfig.axisIntervalV > intervalPQV) {
+                        intervalPQV = dVConfig.axisIntervalV;
+                    }
                 }
                 if (_dataName.indexOf("_LJYL") != -1) {
                     if (!_.isNull(dVConfig.maxV)) {
@@ -89416,6 +89436,9 @@ var RTDataMonitorPanel = React.createClass({
                             minYLV = dVConfig.minV;
                         }
                     }
+                    if (dVConfig.axisIntervalV > intervalYLV) {
+                        intervalYLV = dVConfig.axisIntervalV;
+                    }
                 }
                 if (_dataName.indexOf("_SQSW") != -1 || _dataName.indexOf("_SHSW") != -1) {
                     if (!_.isNull(dVConfig.maxV)) {
@@ -89433,6 +89456,9 @@ var RTDataMonitorPanel = React.createClass({
                         if (dVConfig.minV < minSWV) {
                             minSWV = dVConfig.minV;
                         }
+                    }
+                    if (dVConfig.axisIntervalV > intervalSWV) {
+                        intervalSWV = dVConfig.axisIntervalV;
                     }
                 }
             }
@@ -89483,18 +89509,21 @@ var RTDataMonitorPanel = React.createClass({
                 type: 'value',
                 splitNumber: 10,
                 max: maxPQV,
-                min: minPQV
+                min: minPQV,
+                interval: intervalPQV
             }, {
                 name: "水位",
                 type: 'value',
                 max: maxSWV,
-                min: minSWV
+                min: minSWV,
+                interval: intervalSWV
             }, {
                 name: "降雨量",
                 nameLocation: 'middle',
                 type: 'value',
                 max: maxYLV,
                 min: minYLV,
+                interval: intervalYLV,
                 axisTick: {
                     inside: true
                 },
