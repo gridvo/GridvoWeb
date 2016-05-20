@@ -89428,7 +89428,7 @@ var RTDataMonitorPanel = React.createClass({
                         }
                     }
                     if (!_.isNull(dVConfig.minV)) {
-                        if (maxPQV == "auto") {
+                        if (minPQV == "auto") {
                             minPQV = 100000;
                         }
                         if (dVConfig.minV < minPQV) {
