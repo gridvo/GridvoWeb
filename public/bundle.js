@@ -88381,7 +88381,11 @@ var DVConfigPanel = React.createClass({
 
         var dataName = event.target.name.split("-")[0];
         var configName = event.target.name.split("-")[1];
-        dVConfigs[dataName][configName] = event.target.value;
+        if (configName == "maxV" || configName == "minV" || configName == "axisIntervalV" || configName == "splitNumber") {
+            dVConfigs[dataName][configName] = parseInt(event.target.value);
+        } else {
+            dVConfigs[dataName][configName] = event.target.value;
+        }
         this.setState({
             dVConfigs: dVConfigs
         });
