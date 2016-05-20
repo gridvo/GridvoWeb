@@ -88477,6 +88477,22 @@ var DVConfigPanel = React.createClass({
                                 name: dVConfig.dataName + '-axisIntervalV',
                                 value: dVConfig.axisIntervalV, onChange: dvcp.handleChange })
                         )
+                    ),
+                    React.createElement(
+                        'div',
+                        { className: 'weui_cell' },
+                        React.createElement(
+                            'div',
+                            { className: 'weui_cell_hd' },
+                            '轴间隔数目'
+                        ),
+                        React.createElement(
+                            'div',
+                            { className: 'weui_cell_bd weui_cell_primary' },
+                            React.createElement('input', { className: 'weui_input', type: 'number', pattern: '[0-9]*',
+                                name: dVConfig.dataName + '-splitNumber',
+                                value: dVConfig.splitNumber, onChange: dvcp.handleChange })
+                        )
                     )
                 )
             );
@@ -89268,6 +89284,8 @@ module.exports = RTDataDashBoard;
 },{"./mainDashBoard.js":862,"./rTDataMonitorPanel.js":865,"mqtt":647,"react":858,"react-dom":702,"underscore":859}],865:[function(require,module,exports){
 'use strict';
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var _ = require('underscore');
 var React = require('react');
 var Echarts = require('echarts');
@@ -89386,9 +89404,9 @@ var RTDataMonitorPanel = React.createClass({
             }
         }
 
-        var maxPQV, minPQV, maxSWV, minSWV, maxYLV, minYLV, intervalPQV, intervalSWV, intervalYLV;
+        var maxPQV, minPQV, maxSWV, minSWV, maxYLV, minYLV, intervalPQV, intervalSWV, intervalYLV, splitNumberPQ, splitNumberSW, splitNumberYL;
         maxPQV = minPQV = maxSWV = minSWV = maxYLV = minYLV = "auto";
-        intervalPQV = intervalSWV = intervalYLV = 0;
+        intervalPQV = intervalSWV = intervalYLV = splitNumberPQ = splitNumberSW = splitNumberYL = 0;
         var _iteratorNormalCompletion2 = true;
         var _didIteratorError2 = false;
         var _iteratorError2 = undefined;
@@ -89418,6 +89436,9 @@ var RTDataMonitorPanel = React.createClass({
                     if (dVConfig.axisIntervalV > intervalPQV) {
                         intervalPQV = dVConfig.axisIntervalV;
                     }
+                    if (dVConfig.splitNumber > splitNumberPQ) {
+                        splitNumberPQ = dVConfig.splitNumber;
+                    }
                 }
                 if (_dataName.indexOf("_LJYL") != -1) {
                     if (!_.isNull(dVConfig.maxV)) {
@@ -89439,6 +89460,9 @@ var RTDataMonitorPanel = React.createClass({
                     if (dVConfig.axisIntervalV > intervalYLV) {
                         intervalYLV = dVConfig.axisIntervalV;
                     }
+                    if (dVConfig.splitNumber > splitNumberYL) {
+                        splitNumberYL = dVConfig.splitNumber;
+                    }
                 }
                 if (_dataName.indexOf("_SQSW") != -1 || _dataName.indexOf("_SHSW") != -1) {
                     if (!_.isNull(dVConfig.maxV)) {
@@ -89459,6 +89483,9 @@ var RTDataMonitorPanel = React.createClass({
                     }
                     if (dVConfig.axisIntervalV > intervalSWV) {
                         intervalSWV = dVConfig.axisIntervalV;
+                    }
+                    if (dVConfig.splitNumber > splitNumberSW) {
+                        splitNumberSW = dVConfig.splitNumber;
                     }
                 }
             }
@@ -89504,19 +89531,20 @@ var RTDataMonitorPanel = React.createClass({
                 axisLine: { onZero: false },
                 data: dates
             },
-            yAxis: [{
+            yAxis: [_defineProperty({
                 name: "发电量",
                 type: 'value',
                 splitNumber: 10,
                 max: maxPQV,
                 min: minPQV,
                 interval: intervalPQV
-            }, {
+            }, 'splitNumber', splitNumberPQ), {
                 name: "水位",
                 type: 'value',
                 max: maxSWV,
                 min: minSWV,
-                interval: intervalSWV
+                interval: intervalSWV,
+                splitNumber: splitNumberSW
             }, {
                 name: "降雨量",
                 nameLocation: 'middle',
@@ -89524,6 +89552,7 @@ var RTDataMonitorPanel = React.createClass({
                 max: maxYLV,
                 min: minYLV,
                 interval: intervalYLV,
+                splitNumber: splitNumberYL,
                 axisTick: {
                     inside: true
                 },
