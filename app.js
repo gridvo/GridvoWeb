@@ -8,5 +8,8 @@ var options = {
 app.get('/', function (req, res) {
     res.sendFile('main.html', options);
 });
+app.get('/wechat/sysevent', function (req, res) {
+    console.log(req);
+});
 console.log("Web server has started.");
 app.listen(80);
