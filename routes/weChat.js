@@ -23,7 +23,6 @@ router.get('/sysevent', function (req, res) {
     } else {
         console.log("sys event");
     }
-    res.send();
 });
 
 module.exports = router;
