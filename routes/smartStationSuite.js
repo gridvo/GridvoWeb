@@ -3,8 +3,8 @@ var _ = require('underscore');
 var express = require('express');
 var weChatCorpServiceCcallbackM = require('wechat-corp-service-callback');
 var WeChatAPI = require('../lib/weChatAPI');
-var constant = require('../lib/util/constant');
-var SuiteTicket = require('../lib/util/suiteTicket');
+var constant = require('../lib/util/weChat/constant');
+var SuiteTicket = require('../lib/util/weChat/suiteTicket');
 
 var router = express.Router();
 
@@ -21,7 +21,7 @@ router.post('/sys-event', function (req, res, next) {
     let _config = {
         token: constant.token,
         encodingAESKey: constant.encodingAESKey,
-        suiteid: constant.suiteID
+        suiteid: constant.smartStationSuite.suiteID
     };
     let _handler = function (message, req, res, next) {
         if (message.InfoType == 'suite_ticket') {
@@ -42,6 +42,12 @@ router.post('/sys-event', function (req, res, next) {
         }
     };
     weChatCorpServiceCcallbackM(_config, _handler)(req, res, next);
+});
+
+router.get('/corp-auth-complete', function (req, res) {
+    console.log("corp auth complete");
+    var auth_code = req.query.auth_code;
+    console.log(auth_code);
 });
 
 module.exports = router;
