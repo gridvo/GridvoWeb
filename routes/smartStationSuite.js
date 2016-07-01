@@ -27,18 +27,21 @@ router.get('/sys-event', function (req, res) {
 });
 
 router.post('/sys-event', function (req, res, next) {
-    let constant = WeChat.constant;
-    let _config = {
+    var constant = WeChat.constant;
+    var _config = {
         token: constant.token,
         encodingAESKey: constant.encodingAESKey,
         suiteid: constant.smartStationSuite.suiteID
     };
-    let _handler = function (message, req, res, next) {
+    var _handler = function (message, req, res, next) {
         if (message.InfoType == 'suite_ticket') {
             console.log("wechat server push suite_ticket event");
-            var suiteTicket = message.SuiteTicket;
-            SuiteTicket.save(suiteTicket, function (err, result) {
-                if (_.isNull(err) && result.isSuccess) {
+            let suiteTicketManageService = WeChat.createSuiteTicketManageService();
+            var suiteTicketData = {};
+            suiteTicketData.suiteID = constant.smartStationSuite.suiteID;
+            suiteTicketData.ticket = message.SuiteTicket;
+            suiteTicketManageService.saveSuiteTicket(suiteTicketData, function (err, isSuccess) {
+                if (_.isNull(err) && isSuccess) {
                     res.reply('success');
                 }
             });

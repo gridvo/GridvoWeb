@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('underscore');
+var async = require('async');
 var express = require('express');
 var WeChat = require('gridvo-wechat');
 var weChatCorpServiceAPI = require('wechat-corp-service');
