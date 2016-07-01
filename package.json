@@ -7,7 +7,6 @@
     "express": "^4.13.4",
     "underscore": "^1.8.3",
     "wechat-corp-service": "^0.2.1",
-    "wechat-corp-service-callback": "0.0.1",
-    "wechat-crypto": "0.0.2"
+    "wechat-corp-service-callback": "0.0.1"
   }
 }

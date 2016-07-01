@@ -2,22 +2,32 @@
 var _ = require('underscore');
 var express = require('express');
 var weChatCorpServiceCcallbackM = require('wechat-corp-service-callback');
-var WeChatAPI = require('../lib/weChatAPI');
-var constant = require('../lib/util/weChat/constant');
-var SuiteTicket = require('../lib/util/weChat/suiteTicket');
+var WeChat = require('gridvo-wechat');
 
 var router = express.Router();
-
 router.get('/sys-event', function (req, res) {
     let isWeChatServerAuthURL = !_.isUndefined(req.query.echostr);
     if (isWeChatServerAuthURL) {
-        WeChatAPI.weChatServerAuthCallBackURL(req, res);
+        let callBackURLAuthService = WeChat.createCallBackURLAuthService();
+        var authParameter = {};
+        authParameter.signature = req.query.msg_signature;
+        authParameter.timestamp = req.query.timestamp;
+        authParameter.nonce = req.query.nonce;
+        authParameter.encrypt = req.query.echostr;
+        callBackURLAuthService.authURL(authParameter, function (err, echostr) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            res.send(echostr);
+        });
     } else {
         console.log("WeChat server had auth this URL");
     }
 });
 
 router.post('/sys-event', function (req, res, next) {
+    let constant = WeChat.constant;
     let _config = {
         token: constant.token,
         encodingAESKey: constant.encodingAESKey,
