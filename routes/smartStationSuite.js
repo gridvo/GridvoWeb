@@ -46,9 +46,16 @@ router.post('/sys-event', function (req, res, next) {
                 }
             });
         } else if (message.InfoType == 'change_auth') {
+            console.log("wechat server push change_auth event");
             res.reply('success');
 
         } else if (message.InfoType == 'cancel_auth') {
+            console.log("wechat server push cancel_auth event");
+            res.reply('success');
+        } else if (message.InfoType == 'create_auth') {
+            console.log("corp auth complete");
+            var auth_code = message.AuthCode;
+
             res.reply('success');
         } else {
             res.reply('success');
