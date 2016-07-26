@@ -1,19 +1,21 @@
 'use strict';
 var express = require('express');
-var corpAuthSuiteRoute = require('./routes/corpAuthSuite');
-var smartStationSuiteRoute = require('./routes/smartStationSuite');
-var waterStationRoute = require('./routes/waterStation');
+var ui = require('./routes/wechat/ui');
+var corpAuthSuiteRoute = require('./routes/wechat/corpAuthSuite');
+var smartStationSuiteRoute = require('./routes/wechat/smartStationSuite');
+var waterStationRoute = require('./routes/wechat/smartStationSuite/waterStation');
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
 var options = {
     root: __dirname + '/public/'
 };
+app.use('/wechat/ui', ui);
 app.use('/wechat/corp-auth-suite', corpAuthSuiteRoute);
 app.use('/wechat/smart-station-suite', smartStationSuiteRoute);
 app.use('/wechat/smart-station-suite/water', waterStationRoute);
 app.get('/', function (req, res) {
-    res.sendFile('main.html', options);
+    res.send("content creating....");
 });
-console.log("Web server has started.");
+console.log("Gridvo web server has started.");
 app.listen(80);
