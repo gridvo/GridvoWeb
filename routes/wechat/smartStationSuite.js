@@ -82,6 +82,7 @@ router.post('/sys-event', function (req, res, next) {
                 var suiteID = constant[smartStationSuite].suiteID;
                 var appID = "1";
                 var appContent = constant[smartStationSuite][appID].appContent;
+                appContent.menu.button[0].url = `${appContent.menu.button[0].url}?corpid=${authCorpID}`;
                 authCorpSuiteProxyService.createSuiteApp(authCorpID, suiteID, appID, appContent, cb);
             }], function (err, isSuccess) {
                 if (err) {
