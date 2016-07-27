@@ -7,6 +7,9 @@ var WeChat = require('gridvo-wechat');
 
 var router = express.Router();
 router.use(cookieParser());
+var options = {
+    root: __dirname + '/public/'
+};
 router.get('/smart-station-suite/water', function (req, res) {
     if (!req.cookies || !req.cookies.accountID || !req.cookies.accountTpye || req.cookies.accountTpye != "WeChatCorp") {
         var corpID = req.query.corpid;
@@ -19,7 +22,7 @@ router.get('/smart-station-suite/water', function (req, res) {
         res.redirect(redirectURL);
         return;
     }
-    res.send(req.cookies.accountID);
+    res.sendFile("weChatMain", options);
 });
 
 module.exports = router;

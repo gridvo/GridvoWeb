@@ -7,9 +7,6 @@ var waterStationRoute = require('./routes/wechat/smartStationSuite/waterStation'
 
 var app = express();
 app.use(express.static(__dirname + '/public'));
-var options = {
-    root: __dirname + '/public/'
-};
 app.use('/wechat/ui', ui);
 app.use('/wechat/corp-auth-suite', corpAuthSuiteRoute);
 app.use('/wechat/smart-station-suite', smartStationSuiteRoute);
